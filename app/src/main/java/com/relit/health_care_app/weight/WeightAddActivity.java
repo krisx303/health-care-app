@@ -34,6 +34,7 @@ public class WeightAddActivity extends AppCompatActivity {
     TextView weight_error_field, date_error_field;
     WeightDataBaseHelper dataBaseHelper;
     private Date date;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,33 +55,33 @@ public class WeightAddActivity extends AppCompatActivity {
                     }, year, month, day);
             picker.show();
         });
-        save_btn.setOnClickListener(e -> {
-            if(date==null && eText.getText().toString().length()>6){
-                Log.e("Temperature", "Error");
-            }
-            boolean flag = false;
-            if(date==null){
-                date_error_field.setText("To pole nie może pozostać puste!!");
-                flag = true;
-            }
-            else {
-                date_error_field.setText("");
-            }
-            String weight = edit_weight.getText().toString();
-            if(weight.equals("") || Float.parseFloat(weight)<40 || Float.parseFloat(weight)>150){
-                weight_error_field.setText("Podano nie poprawną wartość");
-                flag = true;
-            }else{
-                weight_error_field.setText("");
-            }
-            if(!flag){
-                WeightModel model = new WeightModel(-1, date, Float.parseFloat(weight));
-                boolean success = dataBaseHelper.addElement(model);
-                Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, Menu.class));
-            }
-        });
+        save_btn.setOnClickListener(e -> onSaveButtonClick());
     }
+
+    private void onSaveButtonClick() {
+        boolean flag = false;
+        if(date==null){
+            date_error_field.setText("To pole nie może pozostać puste!!");
+            flag = true;
+        }
+        else {
+            date_error_field.setText("");
+        }
+        String weight = edit_weight.getText().toString();
+        if(weight.equals("") || Float.parseFloat(weight)<40 || Float.parseFloat(weight)>150){
+            weight_error_field.setText("Podano nie poprawną wartość");
+            flag = true;
+        }else{
+            weight_error_field.setText("");
+        }
+        if(!flag){
+            WeightModel model = new WeightModel(-1, date, Float.parseFloat(weight));
+            boolean success = dataBaseHelper.addElement(model);
+            Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Menu.class));
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==16908332)

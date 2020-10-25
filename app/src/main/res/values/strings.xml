@@ -28,14 +28,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_asd">asd</string>
     <string name="title_activity_settings">Ustawienia</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="choose_feeling">Oceń swoje samopoczucie</string>
+    <string name="choose_stress_level">Oceń poziom stresu</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>

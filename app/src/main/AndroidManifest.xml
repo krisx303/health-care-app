@@ -7,10 +7,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".weight.WeightAddActivity"></activity>
+        <activity android:name=".feeling.FeelingAddActivity" />
+        <activity android:name=".weight.WeightAddActivity" />
         <activity android:name=".weight.WeightChartActivity" />
         <activity android:name=".sugar.SugarChartActivity" />
         <activity android:name=".sugar.SugarAddActivity" />
@@ -18,8 +18,7 @@
             android:name=".pressure.PressureChartActivity"
             android:label="@string/pressure" />
         <activity
-            android:name=".pressure.PressureAddActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".pressure.PressureAddActivity"/>
         <activity
             android:name=".temperature.TemperatureChartActivity"
             android:label="@string/temperature"

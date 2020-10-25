@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.relit.health_care_app.feeling.FeelingAddActivity;
 import com.relit.health_care_app.models.Choice;
 import com.relit.health_care_app.pressure.PressureAddActivity;
 import com.relit.health_care_app.pressure.PressureChartActivity;
@@ -85,6 +86,9 @@ public class Menu extends AppCompatActivity {
                 break;
             case DataHelper.WEIGHT:
                 intent = new Intent(this, choice.isHasData() ? WeightChartActivity.class : WeightAddActivity.class);
+                break;
+            case DataHelper.FEELING:
+                intent = new Intent(this, choice.isHasData() ? FeelingAddActivity.class : FeelingAddActivity.class);
                 break;
         }
         if(intent!=null)

@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,17 +20,17 @@ import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class TemperatureAddActivity extends AppCompatActivity {
-    DatePickerDialog picker;
-    EditText eText, edit_temp;
-    Button save_btn;
+    private DatePickerDialog picker;
+    private EditText eText, edit_temp;
+    private Button save_btn;
     private Date date;
-    TextView temp_error_field, date_error_field;
-    TemperatureDataBaseHelper dataBaseHelper;
+    private TextView temp_error_field, date_error_field;
+    private TemperatureDataBaseHelper dataBaseHelper;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("ShowToast")
     @Override
@@ -54,41 +52,37 @@ public class TemperatureAddActivity extends AppCompatActivity {
                         }, year, month, day);
             picker.show();
         });
-        save_btn.setOnClickListener(e -> {
-            if(date==null && eText.getText().toString().length()>6){
-                Log.e("Temperature", "Error");
-                //String[] text = eText.getText().toString().split("/");
-                //System.out.println(text[0] + text[1] + text[2]);
-                //date = new Date(Integer.parseInt(text[0]), Integer.parseInt(text[1]), Integer.parseInt(text[2]));
-            }
-            boolean flag = false;
-            if(date==null){
-                date_error_field.setText("To pole nie może pozostać puste!!");
-                flag = true;
-            }
-            else {
-                date_error_field.setText("");
-            }
-            String temp = edit_temp.getText().toString();
-            if(temp.equals("") || Float.parseFloat(temp)<35 || Float.parseFloat(temp)>43){
-                temp_error_field.setText("Podano nie poprawną wartość");
-                flag = true;
-            }else{
-                temp_error_field.setText("");
-            }
-            if(!flag){
-                TemperatureModel model = new TemperatureModel(-1, date, Float.parseFloat(temp));
-                boolean success = dataBaseHelper.addElement(model);
-                Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, Menu.class));
-            }
-        });
+        save_btn.setOnClickListener(e -> onSaveButtonClick());
+    }
+
+    private void onSaveButtonClick() {
+        boolean flag = false;
+        if(date==null){
+            date_error_field.setText("To pole nie może pozostać puste!!");
+            flag = true;
+        }
+        else {
+            date_error_field.setText("");
+        }
+        String temp = edit_temp.getText().toString();
+        if(temp.equals("") || Float.parseFloat(temp)<35 || Float.parseFloat(temp)>43){
+            temp_error_field.setText("Podano nie poprawną wartość");
+            flag = true;
+        }else{
+            temp_error_field.setText("");
+        }
+        if(!flag){
+            TemperatureModel model = new TemperatureModel(-1, date, Float.parseFloat(temp));
+            boolean success = dataBaseHelper.addElement(model);
+            Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Menu.class));
+        }
     }
 
     private void findViewElements() {
         edit_temp = findViewById(R.id.edit_temp);
         eText=(EditText) findViewById(R.id.editText1);
-        eText.setInputType(InputType.TYPE_NULL);
+
         temp_error_field = findViewById(R.id.temp_error_field);
         date_error_field = findViewById(R.id.date_error_field);
         save_btn = findViewById(R.id.save_btn);

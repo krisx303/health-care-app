@@ -53,40 +53,40 @@ public class PressureAddActivity extends AppCompatActivity {
                     }, year, month, day);
             picker.show();
         });
-        save_btn.setOnClickListener(e -> {
-            if(date==null && eText.getText().toString().length()>6){
-                Log.e("Temperature", "Error");
-            }
-            boolean flag = false;
-            if(date==null){
-                date_error_field.setText("To pole nie może pozostać puste!!");
-                flag = true;
-            }
-            else {
-                date_error_field.setText("");
-            }
-            String diastolic = edit_diastolic.getText().toString();
-            String systolic = edit_systolic.getText().toString();
-            if(diastolic.equals("") || Float.parseFloat(diastolic)<50 || Float.parseFloat(diastolic)>130){
-                diastolic_error_field.setText("Podano nie poprawną wartość");
-                flag = true;
-            }else{
-                diastolic_error_field.setText("");
-            }
-            if(systolic.equals("") || Float.parseFloat(systolic)<60 || Float.parseFloat(systolic)>220){
-                systolic_error_field.setText("Podano nie poprawną wartość");
-                flag = true;
-            }else{
-                systolic_error_field.setText("");
-            }
-            if(!flag){
-                PressureModel model = new PressureModel(-1, date, Integer.parseInt(systolic), Integer.parseInt(diastolic));
-                boolean success = dataBaseHelper.addElement(model);
-                Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, Menu.class));
-            }
-        });
+        save_btn.setOnClickListener(e -> onSaveButtonClick());
     }
+
+    private void onSaveButtonClick() {
+        boolean flag = false;
+        if(date==null){
+            date_error_field.setText("To pole nie może pozostać puste!!");
+            flag = true;
+        }
+        else {
+            date_error_field.setText("");
+        }
+        String diastolic = edit_diastolic.getText().toString();
+        String systolic = edit_systolic.getText().toString();
+        if(diastolic.equals("") || Float.parseFloat(diastolic)<50 || Float.parseFloat(diastolic)>130){
+            diastolic_error_field.setText("Podano nie poprawną wartość");
+            flag = true;
+        }else{
+            diastolic_error_field.setText("");
+        }
+        if(systolic.equals("") || Float.parseFloat(systolic)<60 || Float.parseFloat(systolic)>220){
+            systolic_error_field.setText("Podano nie poprawną wartość");
+            flag = true;
+        }else{
+            systolic_error_field.setText("");
+        }
+        if(!flag){
+            PressureModel model = new PressureModel(-1, date, Integer.parseInt(systolic), Integer.parseInt(diastolic));
+            boolean success = dataBaseHelper.addElement(model);
+            Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Menu.class));
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==16908332)

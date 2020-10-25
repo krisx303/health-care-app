@@ -55,32 +55,31 @@ public class SugarAddActivity extends AppCompatActivity {
                     }, year, month, day);
             picker.show();
         });
-        save_btn.setOnClickListener(e -> {
-            if(date==null && eText.getText().toString().length()>6){
-                Log.e("Temperature", "Error");
-            }
-            boolean flag = false;
-            if(date==null){
-                date_error_field.setText("To pole nie może pozostać puste!!");
-                flag = true;
-            }
-            else {
-                date_error_field.setText("");
-            }
-            String sugar = edit_sugar.getText().toString();
-            if(sugar.equals("") || Float.parseFloat(sugar)<20 || Float.parseFloat(sugar)>220){
-                sugar_error_field.setText("Podano nie poprawną wartość");
-                flag = true;
-            }else{
-                sugar_error_field.setText("");
-            }
-            if(!flag){
-                SugarModel model = new SugarModel(-1, date, Integer.parseInt(sugar));
-                boolean success = dataBaseHelper.addElement(model);
-                Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, Menu.class));
-            }
-        });
+        save_btn.setOnClickListener(e -> onSaveButtonClick());
+    }
+
+    private void onSaveButtonClick() {
+        boolean flag = false;
+        if(date==null){
+            date_error_field.setText("To pole nie może pozostać puste!!");
+            flag = true;
+        }
+        else {
+            date_error_field.setText("");
+        }
+        String sugar = edit_sugar.getText().toString();
+        if(sugar.equals("") || Float.parseFloat(sugar)<20 || Float.parseFloat(sugar)>220){
+            sugar_error_field.setText("Podano nie poprawną wartość");
+            flag = true;
+        }else{
+            sugar_error_field.setText("");
+        }
+        if(!flag){
+            SugarModel model = new SugarModel(-1, date, Integer.parseInt(sugar));
+            boolean success = dataBaseHelper.addElement(model);
+            Toast.makeText(this, success ? "Zapisano pomiar" : "Błąd podczas zapisywania", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, Menu.class));
+        }
     }
 
     private void findViewElements() {
