@@ -16,8 +16,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.softmoore.android.graphlib.Graph;
 import com.softmoore.android.graphlib.GraphView;
+import com.softmoore.android.graphlib.Label;
 import com.softmoore.android.graphlib.Point;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -50,11 +52,11 @@ public class Coronavirus extends AppCompatActivity {
     }
 
     private void onBrowser1Click() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gov.pl/web/koronawirus"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://news.google.com/covid19/map?hl=pl&mid=%2Fm%2F01bwj7&gl=PL&ceid=PL%3Apl"));
         startActivity(intent);
     }
     private void onBrowser2Click() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://news.google.com/covid19/map?hl=pl&mid=%2Fm%2F01bwj7&gl=PL&ceid=PL%3Apl"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gov.pl/web/koronawirus"));
         startActivity(intent);
     }
 
@@ -73,7 +75,7 @@ public class Coronavirus extends AppCompatActivity {
 
     private void drawGraph() {
         Graph graph = new Graph.Builder().setXTicks(new double[]{200, 220, 240, 260, 280, 300}).setYTicks(new double[] {0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000}).setWorldCoordinates(-40, 300, -500, 14000)
-                .setAxes(0, 0).addLineGraph(points, Color.RED).build();
+                .setXLabels(Arrays.asList(new Label(50, "12/03"), new Label(100, "01/05"), new Label(150, "20/06"), new Label(200, "09/08"), new Label(250, "28/09"))).setAxes(0, 0).addLineGraph(points, Color.RED).build();
         GraphView graphView = findViewById(R.id.graph_view);
         graphView.setGraph(graph);
     }
@@ -90,6 +92,8 @@ public class Coronavirus extends AppCompatActivity {
             DataObject dataObject = dataList.getList().get(i);
             int cases = Integer.parseInt(dataObject.getInfo().split(",")[0]);
             points[i] = new Point(i, cases);
+            if(i%50==0)
+                System.out.println(dataObject.getData());
         }
         drawGraph();
     }
