@@ -30,6 +30,8 @@
     <string name="title_activity_settings">Ustawienia</string>
     <string name="choose_feeling">Oceń swoje samopoczucie</string>
     <string name="choose_stress_level">Oceń poziom stresu</string>
+    <string name="covid_button1">Ilość zakażeń</string>
+    <string name="covid_button2">Informacje o COVID-19</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
